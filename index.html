@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f5f5f5">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Interactive Greek New Testament Morphology Heatmap</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Shepherd.js dependencies -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@11.1.1/dist/css/shepherd.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@11.1.1/dist/js/shepherd.min.js"></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <h1>Greek NT Morphology</h1>
+            <div class="header-controls">
+                <div class="dark-mode-toggle">
+                    <input type="checkbox" id="darkModeToggle" class="dark-mode-checkbox" aria-label="Toggle Dark Mode">
+                    <label for="darkModeToggle" class="dark-mode-label">
+                        <span class="dark-mode-icon">☀️</span>
+                        <span class="dark-mode-icon">🌙</span>
+                        <span class="toggle-ball"></span>
+                    </label>
+                </div>
+                <div class="book-selector">
+                    <select id="bookSelect" aria-label="Select Book"></select>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="heatmapWrapper">
+        <div id="heatmapContainer"></div>
+    </div>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- Load modularized JS files -->
+    <script src="js/attributes.js"></script>
+    <script src="js/heatmaps.js"></script>
+    <script src="js/textDisplay.js"></script>
+    <script src="js/breakdowns.js"></script>
+    <script src="js/tutorials.js"></script>
+    <script src="js/darkMode.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,970 @@
+:root {
+    --primary-color: #2a5298;
+    --primary-color-hover: #1e3c70;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --content-background: #ffffff;
+    --tooltip-border-color: #ddd;
+    --tooltip-shadow: rgba(0, 0, 0, 0.1);
+    --highlight-color: #ffc107;
+    --highlight-shadow: rgba(255, 193, 7, 0.5);
+}
+
+body.dark {
+    --primary-color: #2a8298;
+    --primary-color-hover: #1e6c72;
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --content-background: #2d2d2d;
+    --tooltip-border-color: #444;
+    --tooltip-shadow: rgba(0, 0, 0, 0.2);
+    --highlight-color: #2a8298;
+    --highlight-shadow: rgba(42, 130, 152, 0.5);
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color, #f5f5f5);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color, #333);
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Header Styles */
+.app-header {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+body.dark .app-header {
+    background: linear-gradient(135deg, #2a8298 0%, #1e6c72 100%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.app-header h1 {
+    color: white;
+    margin: 0;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.book-selector {
+    flex-shrink: 0;
+    min-width: 200px;
+}
+
+#bookSelect {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+#bookSelect:hover, #bookSelect:focus {
+    background-color: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.3);
+    outline: none;
+}
+
+#bookSelect option {
+    background-color: var(--primary-color, #2a5298);
+    color: white;
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dark-mode-checkbox {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.dark-mode-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 50px;
+    height: 24px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 100px;
+    position: relative;
+    transition: background-color 0.2s;
+    padding: 0 5px;
+}
+
+.dark-mode-label .dark-mode-icon {
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.toggle-ball {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform 0.2s ease-in-out;
+    z-index: 1;
+}
+
+.dark-mode-checkbox:checked + .dark-mode-label .toggle-ball {
+    transform: translateX(26px);
+}
+
+.dark-mode-checkbox:focus + .dark-mode-label, 
+.dark-mode-label:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+
+body.dark .dark-mode-checkbox:focus + .dark-mode-label, 
+body.dark .dark-mode-label:hover {
+    background-color: rgba(255,255,255,0.3);
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+    .app-header {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .header-container {
+        padding: 0 0.5rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .app-header h1 {
+        text-align: center;
+        font-size: clamp(1.1rem, 4vw, 1.3rem);
+    }
+
+    .header-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .dark-mode-toggle {
+        align-self: center;
+    }
+
+    .book-selector {
+        min-width: unset;
+        width: 100%;
+    }
+
+    #bookSelect {
+        max-width: 100%;
+        padding: 0.4rem 2rem 0.4rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+#controls {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+#heatmapContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--content-background, white);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--tooltip-shadow, rgba(0,0,0,0.1));
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#heatmapDiv {
+    width: 100%;
+    border: 1px solid var(--tooltip-border-color, #ddd);
+    border-radius: 4px;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    transition: border-color 0.3s ease;
+}
+
+/* Ensure plotly container has proper spacing */
+#heatmapDiv .plot-container {
+    margin-bottom: 10px;
+}
+
+/* Add specific styling for Plotly's x-axis title */
+.xtitle {
+    margin-bottom: 10px !important;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px;
+    background-color: var(--background-color, #f8f9fa);
+    border: 1px solid var(--tooltip-border-color, #dee2e6);
+    border-radius: 4px 4px 0 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header-section h2 {
+    margin: 0;
+    color: var(--text-color, #2c3e50);
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.header-section .back-button {
+    margin: 0;
+    padding: 6px 12px;
+    font-size: clamp(11px, 2.5vw, 13px);
+    background-color: var(--primary-color, #2a5298);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.header-section .back-button:hover {
+    background-color: var(--primary-color-hover, #1e3c70);
+}
+
+/* Tutorial Styles */
+.tutorial-step {
+    padding: 0 1rem;
+    max-width: 100%;
+    font-size: clamp(14px, 3vw, 16px);
+}
+
+.tutorial-step h3 {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.tutorial-step p {
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.tutorial-progress {
+    height: 4px;
+    background-color: #e2e8f0;
+    border-radius: 2px;
+    margin-top: 1rem;
+}
+
+.tutorial-progress .progress-bar {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Shepherd overrides */
+.shepherd-element {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    max-width: 90vw;
+    width: auto;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Default styling for all shepherd buttons */
+.shepherd-button {
+    background-color: var(--primary-color) !important; /* Default to primary color */
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.8rem, 2.5vw, 0.875rem);
+    transition: all 0.2s;
+    color: white !important;
+    margin: 0.25rem;
+    border: none;
+}
+
+.shepherd-button:not(:disabled):hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+    background-color: var(--primary-color-hover) !important;
+}
+
+.shepherd-button-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.shepherd-button-secondary {
+    background-color: #718096 !important;
+}
+
+body.dark .shepherd-button {
+    background-color: var(--primary-color) !important;
+}
+
+body.dark .shepherd-button:hover {
+    background-color: var(--primary-color-hover) !important;
+}
+
+body.dark .shepherd-button-primary {
+    background-color: var(--primary-color) !important;
+}
+
+body.dark .shepherd-button-secondary {
+    background-color: #4a4a4a !important;
+}
+
+.shepherd-text {
+    padding: 0 0.75em 1em 0.75em !important;
+}
+
+.shepherd-arrow:before {
+    background: var(--content-background) !important;
+}
+
+.shepherd-modal-overlay-container {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+body.dark .shepherd-text {
+    color: var(--text-color);
+}
+
+body.dark .shepherd-element {
+    background-color: var(--content-background);
+    border-color: var(--tooltip-border-color);
+}
+
+body.dark .shepherd-arrow:before {
+    background: var(--content-background) !important;
+}
+
+/* Update tutorial buttons for dark mode */
+body.dark .shepherd-has-title .shepherd-content .shepherd-header {
+    background-color: var(--content-background);
+    border-bottom-color: var(--tooltip-border-color);
+}
+
+body.dark .shepherd-title {
+    color: var(--text-color);
+}
+
+body.dark .shepherd-footer {
+    border-top-color: var(--tooltip-border-color);
+}
+
+/* Media Queries */
+@media screen and (max-width: 480px) {
+    #bookSelect {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    #filterPanel select {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+/* Touch-friendly styles */
+@media (hover: none) {
+    .back-button {
+        padding: 10px 20px;
+    }
+}
+
+/* Text Display Styles */
+#textDisplayContainer {
+    margin-top: 20px;
+    padding: 0;
+    border: 1px solid var(--tooltip-border-color, #ddd);
+    border-radius: 5px;
+    background-color: var(--content-background, white);
+    box-shadow: 0 2px 4px var(--tooltip-shadow, rgba(0,0,0,0.1));
+    max-height: 100%;
+    overflow-y: auto;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.text-display-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--background-color, #f8f9fa);
+    border-bottom: 1px solid var(--tooltip-border-color, #ddd);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin: 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.text-display-controls label {
+    margin-right: 5px;
+    font-weight: 500;
+    color: var(--text-color, #555);
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+/* Paragraph mode container styling */
+.paragraph-mode-container {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--tooltip-border-color);
+    border-radius: 4px;
+    background-color: var(--content-background);
+    box-shadow: 0 1px 3px var(--tooltip-shadow);
+    transition: all 0.3s ease;
+}
+
+/* Checkbox styling */
+.text-display-controls input[type="checkbox"] {
+    margin: 0 0 0 5px;
+    cursor: pointer;
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--primary-color);
+    border-radius: 3px;
+    outline: none;
+    transition: all 0.2s ease;
+    background-color: transparent;
+}
+
+.text-display-controls input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+}
+
+.text-display-controls input[type="checkbox"]:checked::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+}
+
+.text-display-controls input[type="checkbox"]:hover {
+    border-color: var(--primary-color-hover);
+}
+
+.close-text-button {
+    margin-left: auto;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.close-text-button:hover {
+    background-color: var(--primary-color-hover);
+    transform: translateY(-1px);
+}
+
+.text-content {
+    padding: 15px;
+}
+
+.text-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: var(--text-color, #333);
+    transition: color 0.3s ease;
+}
+
+.filter-description {
+    font-style: italic;
+    margin-bottom: 15px;
+    color: var(--text-color, #666);
+    opacity: 0.8;
+    transition: color 0.3s ease;
+}
+
+.chapter-text {
+    line-height: 1.6;
+    font-size: 18px;
+    font-family: 'Times New Roman', serif;
+    color: var(--text-color, inherit);
+    transition: color 0.3s ease;
+}
+
+.verse-line {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.paragraph {
+    text-indent: 20px;
+    margin-bottom: 15px;
+}
+
+.verse-number {
+    font-weight: bold;
+    font-size: 0.8em;
+    vertical-align: super;
+    color: var(--text-color, #777);
+    opacity: 0.7;
+    margin-right: 3px;
+    transition: color 0.3s ease;
+}
+
+.word {
+    font-family: 'SBL Greek', 'Times New Roman', serif;
+    cursor: pointer;
+}
+
+.highlighted {
+    background-color: var(--highlight-color);
+    padding: 2px 0;
+    border-radius: 3px;
+    box-shadow: 0 0 3px var(--highlight-shadow);
+}
+
+body.dark .highlighted {
+    background-color: var(--highlight-color);
+    box-shadow: 0 0 3px var(--highlight-shadow);
+    color: white;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+    font-weight: 500;
+}
+
+#errorMessage {
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin: 15px 0;
+}
+
+body.dark #errorMessage {
+    background-color: #422329;
+    color: #ffb8bd;
+    border-color: #683942;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #textDisplayContainer {
+        padding: 10px;
+        max-height: 400px;
+    }
+    
+    .chapter-text {
+        font-size: 16px;
+    }
+    
+    .text-display-controls {
+        flex-wrap: wrap;
+    }
+    
+    .close-text-button {
+        margin-top: 10px;
+    }
+
+    .header-section {
+        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .header-section .back-button {
+        align-self: flex-start;
+    }
+
+    #filterPanel {
+        padding: 8px 10px;
+        gap: 8px;
+    }
+
+    #filterPanel label {
+        width: 100%;
+        margin-bottom: 2px;
+    }
+
+    #filterPanel select {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
+#filterPanel {
+    width: 100%;
+    margin: 0;
+    padding: 8px 12px;
+    background-color: var(--background-color, #f8f9fa);
+    border: 1px solid var(--tooltip-border-color, #dee2e6);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#filterPanel label {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-color, #555);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+#filterPanel select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--tooltip-border-color, #ced4da);
+    margin: 0;
+    min-width: 120px;
+    max-width: 100%;
+    font-size: 0.9rem;
+    background-color: var(--content-background, white);
+    color: var(--text-color, #333);
+    transition: all 0.3s ease;
+}
+
+#filterPanel select:hover {
+    border-color: var(--primary-color-hover, #adb5bd);
+}
+
+#filterPanel select:focus {
+    border-color: var(--primary-color, #3498db);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+}
+
+body.dark #filterPanel select option {
+    background-color: var(--content-background, #2d2d2d);
+    color: var(--text-color, #e0e0e0);
+}
+
+/* General Tooltip Styles */
+#tooltip {
+    position: absolute;
+    background-color: var(--content-background);
+    color: var(--text-color);
+    border: 1px solid var(--tooltip-border-color);
+    border-radius: 10px;
+    min-width: 300px;
+    max-width: 300px;
+    max-height: 70vh;
+    z-index: 900;
+    box-shadow: 0 4px 6px var(--tooltip-shadow);
+    font-size: 12px;
+    line-height: 22px;
+    font-family: Gotham, "Gentium Plus", Ezra, Helvetica, Arial, sans-serif;
+    padding: 10px;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(5%);
+    pointer-events: none;
+    word-wrap: break-word;
+    white-space: normal;
+    box-sizing: border-box;
+}
+
+#tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--tooltip-border-color);
+    font-family: 'SBL Greek', serif;
+}
+
+.tooltip-lemma {
+    font-size: 20px;
+    color: var(--text-color);
+}
+
+.tooltip-close button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.tooltip-close button:hover {
+    color: var(--primary-color);
+}
+
+.tooltip-content {
+    padding-top: 10px;
+}
+
+.tooltip-pos-tag,
+.tooltip-gloss,
+.tooltip-literal,
+.tooltip-louw,
+.tooltip-strong {
+    margin-bottom: 5px;
+}
+
+.tooltip-pos-tag {
+    border-bottom: 1px solid var(--tooltip-border-color);
+    padding-bottom: 5px;
+}
+
+/* Mobile Styling: Make tooltips modal-like */
+@media (max-width: 768px) {
+    #tooltip {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        margin: 0;
+        padding: 20px;
+        font-size: 16px;
+        line-height: 24px;
+        border-radius: 0;
+        box-shadow: 0 -2px 10px var(--tooltip-shadow);
+        max-width: none;
+    }
+
+    .tooltip-header {
+        padding-bottom: 15px;
+    }
+
+    .tooltip-lemma {
+        font-size: 20px;
+    }
+
+    .tooltip-close button {
+        font-size: 18px;
+    }
+
+    .tooltip-content {
+        padding-top: 15px;
+    }
+}
+
+/* Ensure tooltip does not go off-screen on desktop */
+@media (min-width: 769px) {
+    #tooltip {
+        max-width: 300px;
+    }
+
+    #tooltip.above-word {
+        transform: translateY(-105%);
+    }
+
+    #tooltip.below-word {
+        transform: translateY(5%);
+    }
+
+    #tooltip {
+        transform-origin: top;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+}
+
+/* Adjust the font size for very small devices */
+@media (max-width: 480px) {
+    #tooltip {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+
+/* Dark mode support */
+body.dark #tooltip {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #eee;
+}
+
+body.dark .tooltip-header {
+    border-bottom-color: #444;
+}
+
+body.dark .tooltip-pos-tag {
+    border-bottom-color: #444;
+}
+
+body.dark .tooltip-close button {
+    color: #eee;
+}
+
+body.dark .tooltip-close button:hover {
+    color: var(--primary-color);
+}
+
+body.dark .shepherd-text {
+    color: var(--text-color);
+}
+
+body.dark .shepherd-element {
+    background-color: var(--content-background);
+    border-color: var(--tooltip-border-color);
+}
+
+body.dark .shepherd-arrow:before {
+    background: var(--content-background) !important;
+}
+
+/* Shepherd tutorial themes */
+.shepherd-theme-dark .shepherd-content {
+    background-color: var(--content-background);
+    color: var(--text-color);
+}
+
+.shepherd-theme-dark .shepherd-header {
+    background-color: var(--primary-color);
+}
+
+.shepherd-theme-dark .shepherd-title {
+    color: white;
+}
+
+.shepherd-theme-dark .shepherd-text {
+    color: var(--text-color);
+}
+
+.shepherd-theme-dark .shepherd-footer {
+    border-top-color: var(--tooltip-border-color);
+}
+
+.shepherd-theme-dark .shepherd-button {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.shepherd-theme-dark .shepherd-button:hover {
+    background-color: var(--primary-color-hover) !important;
+}
+
+.shepherd-theme-dark .shepherd-button-secondary {
+    background-color: #4a4a4a !important;
+}
+
+.shepherd-theme-dark .shepherd-button-secondary:hover {
+    background-color: #3d3d3d !important;
+}
+
+/* Cancel icon (X) in dark mode */
+.shepherd-theme-dark .shepherd-cancel-icon {
+    color: white;
+}
+
+.shepherd-theme-dark .shepherd-cancel-icon:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Progress bar in dark mode */
+.shepherd-theme-dark .tutorial-progress {
+    background-color: #3d3d3d;
+}
+
+.shepherd-theme-dark .tutorial-progress .progress-bar {
+    background-color: var(--primary-color);
+}
+
+/* Customize light theme too for consistency */
+.shepherd-theme-default .shepherd-button-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.shepherd-theme-default .shepherd-button-secondary {
+    background-color: #718096 !important;
+}
+
+.shepherd-theme-default .shepherd-title {
+    color: var(--text-color);
+}
+
+.shepherd-theme-default .tutorial-step h3 {
+    color: var(--primary-color);
+}
+
+/* Fix any custom colors in the tutorial highlighting */
+.tutorial-step h3 {
+    color: var(--primary-color);
+}
