@@ -68,4 +68,30 @@ document.addEventListener('DOMContentLoaded', function() {
             .attr('id', 'errorMessage')
             .text('Failed to load book list.');
     });
+
+    // Info button functionality
+    const infoBtn = document.getElementById('infoBtn');
+    const infoModal = document.getElementById('infoModal');
+    const closeInfo = document.querySelector('.close-info');
+
+    if (infoBtn && infoModal) {
+        infoBtn.addEventListener('click', function(event) {
+            infoModal.style.display = 'block';
+            event.stopPropagation(); // Prevent immediate propagation to document
+        });
+
+        closeInfo.addEventListener('click', function() {
+            infoModal.style.display = 'none';
+        });
+
+        // Close the modal when clicking anywhere outside the modal content
+        document.addEventListener('click', function(event) {
+            // Close if click is not on the button and not inside the modal content
+            if (infoModal.style.display === 'block' && 
+                event.target !== infoBtn && 
+                !infoModal.contains(event.target)) {
+                infoModal.style.display = 'none';
+            }
+        });
+    }
 }); 

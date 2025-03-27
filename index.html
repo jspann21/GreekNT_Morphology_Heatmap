@@ -17,6 +17,9 @@
         <div class="header-container">
             <h1>Greek NT Morphology</h1>
             <div class="header-controls">
+                <div class="book-selector">
+                    <select id="bookSelect" aria-label="Select Book"></select>
+                </div>
                 <div class="dark-mode-toggle">
                     <input type="checkbox" id="darkModeToggle" class="dark-mode-checkbox" aria-label="Toggle Dark Mode">
                     <label for="darkModeToggle" class="dark-mode-label">
@@ -25,8 +28,17 @@
                         <span class="toggle-ball"></span>
                     </label>
                 </div>
-                <div class="book-selector">
-                    <select id="bookSelect" aria-label="Select Book"></select>
+                <div class="info-button">
+                    <button id="infoBtn" aria-label="Information">i</button>
+                    <div id="infoModal" class="info-modal">
+                        <div class="info-content">
+                            <span class="close-info">&times;</span>
+                            <h3>About This Project</h3>
+                            <p>This visualization uses the SBL Greek New Testament text.</p>
+                            <p><a href="https://github.com/jspann21/GreekNT_Morphology_Heatmap" target="_blank">Source Code on GitHub</a></p>
+                            <p>For feedback, suggestions, or comments, please contact: <span id="contactEmail">Enable JavaScript to view email</span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,5 +57,36 @@
     <script src="js/tutorials.js"></script>
     <script src="js/darkMode.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const parts = [
+                [106, 115, 112, 97, 110, 110, 50, 49],
+                [64],
+                [115, 104, 101, 112, 104, 101, 114, 100, 115, 46, 101, 100, 117]
+            ];
+            
+            const decodeEmail = () => {
+                let email = '';
+                let mailto = '';
+                
+                parts.forEach(part => {
+                    part.forEach(charCode => {
+                        const char = String.fromCharCode(charCode);
+                        email += char;
+                        mailto += char;
+                    });
+                });
+                
+                document.getElementById('contactEmail').innerHTML = 
+                    '<a href="mailto:' + mailto + '" rel="nofollow">' + 
+                    email.replace('@', ' [at] ') + '</a>';
+            };
+            
+            window.addEventListener('mousemove', function handler() {
+                decodeEmail();
+                window.removeEventListener('mousemove', handler);
+            });
+        });
+    </script>
 </body>
 </html>
