@@ -291,28 +291,29 @@ function startBreakdownTutorial() {
             'Click on any word in the text to see detailed morphological information about it in a tooltip.',
             currentStep, totalSteps
         ),
-        attachTo: { element: '.text-content span:nth-child(3)', on: 'bottom' },
+        attachTo: { element: '.text-content .word', on: 'bottom' },
         popperOptions: {
             modifiers: [{ name: 'offset', options: { offset: [0, 10] } }]
         },
         beforeShowPromise: function() {
             // This specific logic remains as it's unique to this step
             return new Promise(function(resolve) {
-                const words = document.querySelectorAll('.text-content span');
-                let thirdWord = null;
-                if (words.length >= 3) {
-                    thirdWord = words[2]; // Index 2 is the third word
-                    thirdWord.style.backgroundColor = '#FFEB3B';
-                    thirdWord.style.padding = '2px';
-                    thirdWord.style.borderRadius = '3px';
+                const wordElements = document.querySelectorAll('.text-content .word');
+                let targetWord = null;
+                if (wordElements.length > 0) {
+                    // Select the first word element
+                    targetWord = wordElements[0];
+                    targetWord.style.backgroundColor = '#FFEB3B';
+                    targetWord.style.padding = '2px';
+                    targetWord.style.borderRadius = '3px';
                 }
                 // Ensure the style is removed even if the user advances quickly
                 const stepElement = this.el; // Get the Shepherd step element
                 const removeHighlight = () => {
-                    if (thirdWord) {
-                        thirdWord.style.backgroundColor = '';
-                        thirdWord.style.padding = '';
-                        thirdWord.style.borderRadius = '';
+                    if (targetWord) {
+                        targetWord.style.backgroundColor = '';
+                        targetWord.style.padding = '';
+                        targetWord.style.borderRadius = '';
                     }
                     // Clean up listeners if the step element exists
                     if (stepElement) {
