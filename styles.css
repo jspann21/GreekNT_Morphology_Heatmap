@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'SBL Greek';
+    src: url('/fonts/sbl_greek.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --primary-color: #2a5298;
     --primary-color-hover: #1e3c70;
