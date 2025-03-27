@@ -451,7 +451,11 @@ function addVerseContent(element, verseWords, category, attribute, value) {
         // Create word span
         const wordSpan = element.append('span')
             .attr('class', shouldHighlight ? 'word highlighted' : 'word')
-            .text(wordInfo.word_forms[0] + ' '); // Add space after word
+            .text(wordInfo.word_forms[0]); // Don't add space to the word itself
+            
+        // Add space after word (outside the highlighted span)
+        element.append('span')
+            .text(' ');
 
         // Store word info and add click listener for tooltip
         wordSpan.datum(wordInfo)
